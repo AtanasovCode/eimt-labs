@@ -18,3 +18,12 @@ async def find_by_id(product_id: int):
         return product
     
     return JSONResponse(status_code=404, content={"message": f"Product with id {product_id} not found"})
+
+
+@router.get("/search/{product_name}", response_model=list[Product])
+async def get_product_by_name(product_name: str):
+    products_with_target_name = products.get_by_name(product_name)
+    
+    if products_with_target_name is not None and len(products_with_target_name) > 0:
+        return products_with_target_name
+    return JSONResponse(status_code=404, content={"message": f"No results found!"})

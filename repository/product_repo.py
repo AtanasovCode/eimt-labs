@@ -21,6 +21,13 @@ def find_by_id(product_id: int):
             return p
     return None
 
+def get_by_name(product_name: str):
+    products_with_target_name = []
+    for p in products:
+        if p.name == product_name:
+            products_with_target_name.append(p)
+    return products_with_target_name
+
 
 def save(product: Product):
     products.append(product)

@@ -8,6 +8,9 @@ def list_all():
 def find_by_id(product_id: int):
     return products.find_by_id(product_id)
 
+def get_by_name(product_name: str):
+    return products.get_by_name(product_name)
+
 def delete_product(product_id: int):
     return products.delete_product(product_id)
 
