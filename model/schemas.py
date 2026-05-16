@@ -6,7 +6,7 @@ class Category(BaseModel):
     description: str
     
 
-class Manufacturer:
+class Manufacturer(BaseModel):
     id: int
     name: str
     address: str
