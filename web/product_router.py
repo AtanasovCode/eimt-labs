@@ -42,3 +42,11 @@ async def update_product(product_dto: ProductDto):
         return products.update(product_dto)
 
     return JSONResponse(status_code=404, content={"message": "Product not found"})
+
+@router.delete("/")
+async def delete_product(product_dto: ProductDto):
+    product = products.find_by_id(product_dto.id)
+    
+    if product is not None:
+        return products.delete_product(product_dto.id)
+    return JSONResponse(status_code=404, content={"message": "Product not found"})
