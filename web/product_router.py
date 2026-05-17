@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
-from model.schemas import Product
+from model.schemas import Product, ProductDto
 from service import product_service as products
 
 
@@ -27,3 +27,8 @@ async def get_product_by_name(product_name: str):
     if products_with_target_name is not None and len(products_with_target_name) > 0:
         return products_with_target_name
     return JSONResponse(status_code=404, content={"message": f"No results found!"})
+
+
+@router.post("/", response_model=Product)
+async def create_product(product_dto: ProductDto):
+    return products.save(product_dto)
