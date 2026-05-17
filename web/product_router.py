@@ -32,3 +32,13 @@ async def get_product_by_name(product_name: str):
 @router.post("/", response_model=Product)
 async def create_product(product_dto: ProductDto):
     return products.save(product_dto)
+
+
+@router.put("/", response_model=Product)
+async def update_product(product_dto: ProductDto):
+    product = products.find_by_id(product_dto.id)
+    
+    if product is not None:
+        return products.update(product_dto)
+
+    return JSONResponse(status_code=404, content={"message": "Product not found"})
