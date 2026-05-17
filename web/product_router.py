@@ -48,5 +48,7 @@ async def delete_product(product_dto: ProductDto):
     product = products.find_by_id(product_dto.id)
     
     if product is not None:
-        return products.delete_product(product_dto.id)
+        products.delete_product(product_dto.id)
+        return JSONResponse(status_code=200, content={"message": f"Product with id {product_dto.id} deleted"})
+    
     return JSONResponse(status_code=404, content={"message": "Product not found"})
