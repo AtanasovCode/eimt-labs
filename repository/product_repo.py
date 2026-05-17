@@ -1,13 +1,12 @@
-from model.schemas import Product
-from repository import category_repo as category
-from repository import manufacturer_repo as manufacturer
+from model.schemas import ProductSchema
+from repository import category_repo as category, manufacturer_repo as manufacturer
 
 products = [
-    Product(id=1, name="Shirt", price=14.99,
+    ProductSchema(id=1, name="Shirt", price=14.99,
             category=category.find_by_id(1),
             manufacturer=manufacturer.find_by_id(1)
             ),
-    Product(id=2, name="Bucket", price=12.25,
+    ProductSchema(id=2, name="Bucket", price=12.25,
             category=category.find_by_id(2),
             manufacturer=manufacturer.find_by_id(2))
 ]
@@ -29,7 +28,7 @@ def get_by_name(product_name: str):
     return products_with_target_name
 
 
-def save(product: Product):
+def save(product: ProductSchema):
     products.append(product)
     return product
 

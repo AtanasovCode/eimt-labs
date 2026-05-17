@@ -1,4 +1,4 @@
-from model.schemas import Product, ProductDto
+from model.schemas import ProductSchema, ProductDtoSchema
 from repository import product_repo as products
 from repository import category_repo as categories, manufacturer_repo as manufacturers
 
@@ -14,11 +14,11 @@ def get_by_name(product_name: str):
 def delete_product(product_id: int):
     return products.delete_product(product_id)
 
-def save(product_dto: ProductDto):
+def save(product_dto: ProductDtoSchema):
     category = categories.find_by_id(product_dto.category_id)
     manufacturer = manufacturers.find_by_id(product_dto.manufacturer_id)
     
-    product = Product(
+    product = ProductSchema(
         id = product_dto.id,
         name = product_dto.name,
         price = product_dto.price,
@@ -28,7 +28,7 @@ def save(product_dto: ProductDto):
     
     return products.save(product)
 
-def update(product_dto: ProductDto):
+def update(product_dto: ProductDtoSchema):
     product = products.find_by_id(product_dto.id)
     product.id = product_dto.id
     product.name = product_dto.name

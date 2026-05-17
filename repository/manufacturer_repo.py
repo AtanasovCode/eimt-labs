@@ -1,9 +1,9 @@
-from model.schemas import Manufacturer
+from model.schemas import ManufacturerSchema
 
 manufacturers = [
-    Manufacturer(id=1, name="Nike", address="USA"),
-    Manufacturer(id=2, name="KFC", address="USA"),
-    Manufacturer(id=3, name="A Records", address="UK")
+    ManufacturerSchema(id=1, name="Nike", address="USA"),
+    ManufacturerSchema(id=2, name="KFC", address="USA"),
+    ManufacturerSchema(id=3, name="A Records", address="UK")
 ]
 
 def list_all():

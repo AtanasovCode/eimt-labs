@@ -1,9 +1,9 @@
-from model.schemas import Category
+from model.schemas import CategorySchema
 
 categories = [
-    Category(id=1, name="Sport", description="Sports Category"),
-    Category(id=2, name="Food", description="Food Category"),
-    Category(id=3, name="Music", description="Music Category")
+    CategorySchema(id=1, name="Sport", description="Sports Category"),
+    CategorySchema(id=2, name="Food", description="Food Category"),
+    CategorySchema(id=3, name="Music", description="Music Category")
 ]
 
 def list_all():

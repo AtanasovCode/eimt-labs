@@ -1,8 +1,8 @@
-from repository import category_repo as category
+from repository import category_repo as categories
 
 def list_all():
-    return category.list_all()
+    return categories.list_all()
 
 
 def find_by_id(category_id: int):
-    return category.find_by_id(category_id)
+    return categories.find_by_id(category_id)

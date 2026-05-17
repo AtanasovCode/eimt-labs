@@ -1,25 +1,25 @@
 from pydantic import BaseModel
 
-class Category(BaseModel):
+class CategorySchema(BaseModel):
     id: int
     name: str
     description: str
     
 
-class Manufacturer(BaseModel):
+class ManufacturerSchema(BaseModel):
     id: int
     name: str
     address: str
 
-class Product(BaseModel):
+class ProductSchema(BaseModel):
     id: int
     name: str
     price: float
-    category: Category
-    manufacturer: Manufacturer
+    category: CategorySchema
+    manufacturer: ManufacturerSchema
 
 
-class ProductDto(BaseModel):
+class ProductDtoSchema(BaseModel):
     id: int
     name: str
     price: float
