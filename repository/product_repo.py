@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 
 from model.models import Product
 from model.schemas import (
-ProductSchema,
 ProductCreate,
 ProductUpdate,
 )

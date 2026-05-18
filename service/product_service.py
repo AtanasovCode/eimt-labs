@@ -1,39 +1,24 @@
-from model.schemas import ProductSchema, ProductDtoSchema
+from sqlalchemy.orm import Session
 from repository import product_repo as products
-from repository import category_repo as categories, manufacturer_repo as manufacturers
+from model.schemas import (
+    ProductCreate,
+    ProductUpdate,
+)
 
-def list_all():
-    return products.list_all()
+def list_all(db: Session):
+    return products.list_all(db)
 
-def find_by_id(product_id: int):
-    return products.find_by_id(product_id)
+def find_by_id(db: Session, product_id: int):
+    return products.find_by_id(db, product_id)
 
-def get_by_name(product_name: str):
-    return products.get_by_name(product_name)
+def get_by_name(db: Session, product_name: str):
+    return products.get_by_name(db, product_name)
 
-def delete_product(product_id: int):
-    return products.delete_product(product_id)
+def delete_product(db: Session, product_id: int):
+    return products.delete(db, product_id)
 
-def save(product_dto: ProductDtoSchema):
-    category = categories.find_by_id(product_dto.category_id)
-    manufacturer = manufacturers.find_by_id(product_dto.manufacturer_id)
-    
-    product = ProductSchema(
-        id = product_dto.id,
-        name = product_dto.name,
-        price = product_dto.price,
-        category = category,
-        manufacturer = manufacturer
-    )
-    
-    return products.save(product)
+def save(db: Session, product_create: ProductCreate):
+    return products.save(db, product_create)
 
-def update(product_dto: ProductDtoSchema):
-    product = products.find_by_id(product_dto.id)
-    product.id = product_dto.id
-    product.name = product_dto.name
-    product.price = product_dto.price
-    product.category = categories.find_by_id(product_dto.category_id)
-    product.manufacturer = manufacturers.find_by_id(product_dto.manufacturer_id)
-    
-    return product
+def update(db: Session, product_update: ProductUpdate, product_id: int):
+    return products.update(db, product_update, product_id)
