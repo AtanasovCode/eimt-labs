@@ -1,39 +1,54 @@
-from model.schemas import ProductSchema
-from repository import category_repo as category, manufacturer_repo as manufacturer
+from sqlalchemy.orm import Session
 
-products = [
-    ProductSchema(id=1, name="Shirt", price=14.99,
-            category=category.find_by_id(1),
-            manufacturer=manufacturer.find_by_id(1)
-            ),
-    ProductSchema(id=2, name="Bucket", price=12.25,
-            category=category.find_by_id(2),
-            manufacturer=manufacturer.find_by_id(2))
-]
+from model.models import Product
+from model.schemas import (
+ProductSchema,
+ProductCreate,
+ProductUpdate,
+)
 
-def list_all():
-    return products
+def list_all(db: Session):
+    return db.query(Product).all()
 
-def find_by_id(product_id: int):
-    for p in products:
-        if p.id == product_id:
-            return p
-    return None
+def find_by_id(db: Session, product_id: int):
+    return db.query(Product).filter(Product.id == product_id).first()
 
-def get_by_name(product_name: str):
-    products_with_target_name = []
-    for p in products:
-        if p.name == product_name:
-            products_with_target_name.append(p)
-    return products_with_target_name
+def get_by_name(db: Session, product_name: str):
+    return db.query(Product).filter(Product.name == product_name).all()
 
 
-def save(product: ProductSchema):
-    products.append(product)
+def save(db: Session, product_create: ProductCreate):
+    new_product = Product(
+        name = product_create.name,
+        price = product_create.price,
+        quantity = product_create.quantity,
+        category_id = product_create.category_id,
+        manufacturer_id = product_create.manufacturer_id
+    )
+    
+    db.add(new_product)
+    db.commit()
+    db.refresh(new_product)
+    return new_product
+    
+    
+def update(db: Session, product_update: ProductUpdate, product_id: int):
+    product = find_by_id(db, product_id)
+    
+    if not product:
+        return None
+    
+    for key, value in product_update.model_dump(exclude_unset=True).items():
+        setattr(product, key, value)
+        
+    db.commit()
+    db.refresh(product)
     return product
 
-def delete_product(product_id: int):
-    for p in products:
-        if p.id == product_id:
-            products.remove(p)
-            
+
+def delete(db: Session, product_id: int):
+    product = find_by_id(db, product_id)
+    if product:
+        db.delete(product)
+        db.commit()
+    return product
