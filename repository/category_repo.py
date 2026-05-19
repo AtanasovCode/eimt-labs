@@ -1,16 +1,5 @@
-from model.schemas import CategorySchema
+from sqlalchemy.orm import Session
+from model.models import Category
 
-categories = [
-    CategorySchema(id=1, name="Sport", description="Sports Category"),
-    CategorySchema(id=2, name="Food", description="Food Category"),
-    CategorySchema(id=3, name="Music", description="Music Category")
-]
-
-def list_all():
-    return categories
-
-def find_by_id(category_id: int):
-    for c in categories:
-        if c.id == category_id:
-            return c
-    return None
+def list_all(db: Session):
+    return db.query(Category).all()

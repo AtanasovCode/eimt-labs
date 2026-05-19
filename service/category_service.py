@@ -1,7 +1,8 @@
+from sqlalchemy.orm import Session
 from repository import category_repo as categories
 
-def list_all():
-    return categories.list_all()
+def list_all(db: Session):
+    return categories.list_all(db)
 
 
 def find_by_id(category_id: int):
