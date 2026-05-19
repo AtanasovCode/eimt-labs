@@ -1,8 +1,20 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from web.product_router import router as product_api_router
+from database.seed import seed
+from database.database import engine
+from model.models import Base
 
 
-app = FastAPI()
+Base.metadata.create_all(bind=engine)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    seed()
+    yield
+    
+app = FastAPI(lifespan=lifespan)
 app.include_router(product_api_router)
 
 
