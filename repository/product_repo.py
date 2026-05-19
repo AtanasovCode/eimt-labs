@@ -36,7 +36,7 @@ def update(db: Session, product_update: ProductUpdate, product_id: int):
     
     if not product:
         return None
-    
+        
     for key, value in product_update.model_dump(exclude_unset=True).items():
         setattr(product, key, value)
         

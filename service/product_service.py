@@ -14,7 +14,7 @@ def find_by_id(db: Session, product_id: int):
 def get_by_name(db: Session, product_name: str):
     return products.get_by_name(db, product_name)
 
-def delete_product(db: Session, product_id: int):
+def delete(db: Session, product_id: int):
     return products.delete(db, product_id)
 
 def save(db: Session, product_create: ProductCreate):
