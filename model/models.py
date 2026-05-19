@@ -30,8 +30,8 @@ class Product(Base):
     name = Column(String)
     price = Column(Float)
     quantity = Column(Integer)
-    category_id = Column(Integer, ForeignKey="categories.id")
-    manufacturer_id = Column(Integer, ForeignKey="manufacturers.id")
+    category_id = Column(Integer, ForeignKey("categories.id"))
+    manufacturer_id = Column(Integer, ForeignKey("manufacturers.id"))
     
     category = relationship("Category", back_populates="products")
     manufacturer = relationship("Manufacturer", back_populates="products")
