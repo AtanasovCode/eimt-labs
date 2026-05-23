@@ -1,10 +1,12 @@
 from sqlalchemy.orm import Session
-from model.models import Cart, CartItem
+from model.models import Cart, CartItem, Product
 from model.schemas import CartItemCreate
 
 def get_cart_by_user(db: Session, user_id: int):
     return db.query(Cart).filter(Cart.user_id == user_id).first()
 
+def get_cart_items(db: Session, cart_id: int):
+    return db.query(CartItem).filter(CartItem.cart_id == cart_id).all()
 
 def create_cart(db: Session, user_id: int):
     new_cart = Cart(user_id = user_id)
@@ -46,5 +48,18 @@ def remove_item_from_cart(db: Session, cart_id: int, item_id: int):
 
 
 def clear_cart(db: Session, cart_id: int):
+    db.query(CartItem).filter(CartItem.cart_id == cart_id).delete()
+    db.commit()
+
+
+def buy_items(db: Session, cart_id: int):
+    cart_items = get_cart_items(db, cart_id)
+
+    for item in cart_items:
+        product = db.query(Product).filter(Product.id == item.product_id).first()
+        if not product or product.quantity > item.quantity:
+            raise ValueError(f"Insufficient stock for product {item.product_id}")
+        product.quantity -= item.quantity
+
     db.query(CartItem).filter(CartItem.cart_id == cart_id).delete()
     db.commit()
