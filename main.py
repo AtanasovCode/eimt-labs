@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from web.product_router import router as product_api_router
+from web.cart_couter import router as cart_api_router
 from database.seed import seed
 from database.database import engine
 from model.models import Base
@@ -16,6 +17,7 @@ async def lifespan(app: FastAPI):
     
 app = FastAPI(lifespan=lifespan)
 app.include_router(product_api_router)
+app.include_router(cart_api_router)
 
 
 @app.get("/")
