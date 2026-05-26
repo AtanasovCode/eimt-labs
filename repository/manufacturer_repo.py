@@ -1,16 +1,8 @@
-from model.schemas import ManufacturerSchema
+from model.models import Manufacturer
+from sqlalchemy.orm import Session
 
-manufacturers = [
-    ManufacturerSchema(id=1, name="Nike", address="USA"),
-    ManufacturerSchema(id=2, name="KFC", address="USA"),
-    ManufacturerSchema(id=3, name="A Records", address="UK")
-]
+def list_all(db: Session):
+    return db.query(Manufacturer).all()
 
-def list_all():
-    return manufacturers
-
-def find_by_id(manufacturer_id: int):
-    for m in manufacturers:
-        if m.id == manufacturer_id:
-            return m
-    return None
+def find_by_id(db: Session, manufacturer_id: int):
+    return db.query(Manufacturer).filter(Manufacturer.id == manufacturer_id).first()
