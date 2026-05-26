@@ -84,7 +84,7 @@ class CartItemCreate(BaseModel):
 
 
 class CartSchema(BaseModel):
-    id: int,
+    id: int
     user: UserSchema
     items: list[CartItemSchema]
 

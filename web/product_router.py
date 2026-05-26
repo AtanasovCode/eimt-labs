@@ -13,10 +13,6 @@ router = APIRouter(prefix="/api/products", tags=["Products"])
 async def list_all(db: Session = Depends(get_db)):
     return products.list_all(db)
 
-@router.get("/categories", response_model=list[CategorySchema])
-def get_categories(db: Session = Depends(get_db)):
-    return categories.list_all(db)
-
 @router.get("/{product_id}", response_model=ProductSchema)
 async def find_by_id(product_id: int, db: Session = Depends(get_db)):
     product = products.find_by_id(db, product_id)

@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from web.product_router import router as product_api_router
-from web.cart_couter import router as cart_api_router
+from web.cart_router import router as cart_api_router
 from database.seed import seed
 from database.database import engine
 from model.models import Base
@@ -16,6 +17,20 @@ async def lifespan(app: FastAPI):
     yield
     
 app = FastAPI(lifespan=lifespan)
+
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(product_api_router)
 app.include_router(cart_api_router)
 
