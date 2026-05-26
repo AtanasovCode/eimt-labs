@@ -40,6 +40,7 @@ class ProductSchema(BaseModel):
     id: int
     name: str
     price: float
+    quantity: int
     category: CategorySchema
     manufacturer: ManufacturerSchema
     
