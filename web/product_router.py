@@ -1,5 +1,4 @@
-from fastapi import APIRouter
-from fastapi.params import Depends
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from database.database import get_db
 from fastapi.responses import JSONResponse
@@ -47,7 +46,7 @@ async def update(product_update: ProductUpdate, product_id: int, db: Session = D
 
     return JSONResponse(status_code=404, content={"message": "Product not found"})
 
-@router.delete("/")
+@router.delete("/{product_id}")
 async def delete(product_id: int, db: Session = Depends(get_db)):
     product = products.find_by_id(db, product_id)
     
